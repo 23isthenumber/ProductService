@@ -1,13 +1,18 @@
 package productService.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
 
 @Entity
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @NotBlank(message = "must not be empty")
     private String name;
+    @Min(value = 1)
     private int price;
     private boolean available;
 
