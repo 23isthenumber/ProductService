@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import productService.model.Product;
 import productService.service.ProductService;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -37,12 +38,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product create(@RequestBody Product product) {
+    public Product create(@Valid @RequestBody Product product) {
         return productService.save(product);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> update (@RequestBody Product product, @PathVariable Integer id){
+    public ResponseEntity<Product> update (@Valid @RequestBody Product product, @PathVariable Integer id){
         Product beforeUpdate = productService.findOne(id);
         beforeUpdate.setName(product.getName());
         beforeUpdate.setPrice(product.getPrice());
