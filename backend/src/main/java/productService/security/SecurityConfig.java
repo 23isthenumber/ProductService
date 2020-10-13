@@ -9,19 +9,27 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final PasswordEncoder passwordEncoder;
+
+    public SecurityConfig(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+               // .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/")
-                .permitAll()
+                .antMatchers("/", "/*")
+                //.permitAll()
+                .hasRole("USER")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -34,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected UserDetailsService userDetailsService() {
         UserDetails dupaUser= User.builder()
                 .username("dupa")
-                .password("dupa123")
+                .password(passwordEncoder.encode("dupa123"))
                 .roles("USER")
                 .build();
 
