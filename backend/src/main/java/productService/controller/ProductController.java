@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import productService.model.Product;
 import productService.service.ProductService;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -37,10 +38,13 @@ public class ProductController {
         }
     }
 
+
+
     @PostMapping
     public Product create(@Valid @RequestBody Product product) {
         return productService.save(product);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Product> update (@Valid @RequestBody Product product, @PathVariable Integer id){
@@ -51,7 +55,7 @@ public class ProductController {
         Product afterUpdate = productService.save(beforeUpdate);
         return ResponseEntity.ok(afterUpdate);
     }
-
+ 
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {

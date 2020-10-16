@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -25,15 +26,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-               // .csrf().disable()
+               //.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+               // .and()
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/*")
-                //.permitAll()
+                .antMatchers("/")
                 .hasRole("USER")
+                .antMatchers("/*")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+                .formLogin()
+               // .loginPage("login").permitAll()
+                .defaultSuccessUrl("http://localhost:3000/", true )
+                .passwordParameter("password")
+                .usernameParameter("username")
+                .and()
+                .rememberMe()/* for 2 weeks. Needs to  be turn on in frontend, produces a token
+                like sesion */
+                .rememberMeParameter("remember-me")
+               .and()
+               .logout()
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID", "remember-me")
+                .logoutSuccessUrl("/login");
+
     }
 
 
@@ -41,8 +59,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected UserDetailsService userDetailsService() {
         UserDetails dupaUser= User.builder()
-                .username("dupa")
-                .password(passwordEncoder.encode("dupa123"))
+                .username("user")
+                .password(passwordEncoder.encode("user123"))
                 .roles("USER")
                 .build();
 
