@@ -6,6 +6,6 @@ import java.util.Optional;
 
 public interface UserDao {
 
-    public Optional<User> selectUserByName(String username);
+    Optional<User> selectUserByName(String username);
 
 }

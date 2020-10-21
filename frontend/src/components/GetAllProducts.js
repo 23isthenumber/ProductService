@@ -46,7 +46,7 @@ class GetAllProducts extends Component{
             <div>
                 <h2 className="text-center">Products list</h2>
                 <div className="row">
-                    <button className="btn btn-primary" onClick={this.addProduct}>
+                    <button className="btn btn-outline-primary" onClick={this.addProduct}>
                         Add Product
                     </button>
 

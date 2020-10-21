@@ -34,7 +34,7 @@ class ViewProductComponent extends Component {
                         </div>
                         <div className = "row">
                             <label> Availability: </label>
-                            <div> { this.state.product.available}</div>
+                            <div> { String(this.state.product.available) }</div>
                         </div>
                     </div>
 

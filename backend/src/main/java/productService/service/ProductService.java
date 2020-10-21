@@ -5,7 +5,6 @@ import productService.data.ProductRepository;
 import productService.model.Product;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service

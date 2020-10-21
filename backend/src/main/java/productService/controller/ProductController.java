@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import productService.model.Product;
 import productService.service.ProductService;
 
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.NoSuchElementException;
